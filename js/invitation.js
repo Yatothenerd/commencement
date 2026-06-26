@@ -22,19 +22,9 @@ function fitInvitation() {
   const body = document.querySelector('.page-invite .inv-body');
   if (!page || !body) return;
 
-  body.style.transform = 'none';                 // measure natural size
-  const cs = getComputedStyle(page);
-  const padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-  const available = page.clientHeight - padY - 6;   // small safety margin
-  const needed = body.scrollHeight;
-
-  if (needed > available && needed > 0) {
-    const scale = Math.max(0.45, available / needed);
-    body.style.transformOrigin = 'center center';
-    body.style.transform = `scale(${scale})`;
-  } else {
-    body.style.transform = 'none';
-  }
+  // Content is shown at full size; the page scrolls if it's taller than
+  // the screen, so nothing is ever cropped.
+  body.style.transform = 'none';
 }
 window.addEventListener('resize', fitInvitation);
 window.addEventListener('load', fitInvitation);
