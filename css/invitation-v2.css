@@ -1,0 +1,429 @@
+/* ═══════════════════════════════════════════════════════════
+   PIU Commencement 2026 — Invitation V2 layout additions
+   Original blue/cream design + fonts. Everything EXCEPT the
+   guest name / position / company is rendered in dark grey;
+   name / position / company stay blue (from css/invitation.css).
+   ═══════════════════════════════════════════════════════════ */
+
+.inv2 {
+  --ink: #505050;
+  /* dark grey */
+  --ink-soft: #6e6e6e;
+  /* muted grey */
+}
+
+/* Everything that was blue but is NOT name/pos/company -> dark grey */
+.inv2 .inv-preamble {
+  color: var(--ink);
+}
+
+.inv2 .blue-orn {
+  color: var(--ink);
+  opacity: 0.6;
+}
+
+.inv2 .inv-body-text {
+  color: var(--ink);
+}
+
+/* Crest and watermark desaturate to grey; the INVITATION plate stays blue */
+.inv2-crest,
+.inv2-watermark {
+  filter: grayscale(1);
+}
+
+/* Decorative motif (SVG/Asset 1.svg) in the bottom-left corner.
+   The SVG art is white, so we use it as a mask and paint it in our
+   own colour (dark grey to match the rest of the card). */
+.inv2-art-bl {
+  position: absolute;
+  right: 30px;
+  /* starts at the inner edge of the right khmer strip */
+  bottom: 0;
+  width: 80%;
+  max-width: 320px;
+  height: 300px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  transform-origin: bottom right;
+  /* Show the artwork in its own (blue) colours — no recolouring. */
+  background: url("../SVG/bottom_left.svg") no-repeat right bottom / contain;
+  /* Appears at the exact same time as the khmer strips. */
+  animation: artReveal 0.8s ease both;
+}
+
+/* Fade up to the motif's own resting opacity (the value on .inv2-art-bl),
+   instead of forcing a fixed end value that would override it. */
+@keyframes artReveal {
+  from {
+    opacity: 0;
+  }
+}
+
+/* gentle idle breathing for the corner motif */
+@keyframes artIdle {
+
+  0%,
+  100% {
+    opacity: 0.80;
+    transform: scale(1) translateY(0);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scale(1.03) translateY(-4px);
+  }
+}
+
+/* Guest name — animated light sweep across the text */
+.inv2 .inv-name {
+  background: linear-gradient(100deg,
+      var(--blue) 0%, var(--blue) 42%,
+      #aac3ff 50%,
+      var(--blue) 58%, var(--blue) 100%);
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--blue);
+  /* fallback if clip unsupported */
+  animation: nameSweep 4.5s ease-in-out infinite;
+}
+
+@keyframes nameSweep {
+  0% {
+    background-position: 130% 0;
+  }
+
+  100% {
+    background-position: -30% 0;
+  }
+}
+
+/* Crest + plate sizing */
+.inv2-crest {
+  width: 72px;
+  height: auto;
+  display: block;
+  margin: 0 auto 14px;
+}
+
+.inv2-plate {
+  width: 200px;
+  margin-bottom: 14px;
+  margin-top: 30px;
+}
+
+/* ── Date block (vintage frame) ──────── */
+.inv2-datebox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  border: 1.5px solid var(--blue);
+  opacity: 0.3;
+  padding: 20px 26px;
+  margin: 20px auto 26px;
+  max-width: 320px;
+  position: relative;
+  background: transparent;
+}
+
+/* Inner hairline = double-frame vintage look */
+.inv2-datebox::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1.5px solid var(--blue);
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Decorative corner diamonds sitting on the outer frame */
+.inv2-corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: var(--cream, #F7F3E8);
+  border: 1.5px solid var(--blue);
+  opacity: 0.3;
+  transform: rotate(45deg);
+  z-index: 1;
+  /* opacity: 0.3; */
+}
+
+.inv2-corner.tl {
+  top: -5px;
+  left: -5px;
+}
+
+.inv2-corner.tr {
+  top: -5px;
+  right: -5px;
+}
+
+.inv2-corner.bl {
+  bottom: -5px;
+  left: -5px;
+}
+
+.inv2-corner.br {
+  bottom: -5px;
+  right: -5px;
+}
+
+.inv2-date-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.inv2-dow,
+.inv2-month {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.inv2-day {
+  font-family: 'Ivy Presto', serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--blue);
+}
+
+.inv2-date-sep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  align-self: stretch;
+  justify-content: center;
+}
+
+.inv2-date-sep i {
+  flex: 1;
+  width: 1px;
+  background: rgba(58, 58, 58, 0.3);
+
+}
+
+.inv2-date-sep span {
+  font-size: 7px;
+  color: var(--ink);
+  opacity: 0.6;
+}
+
+.inv2-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inv2-time-num {
+  font-family: 'Ivy Presto', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--blue);
+  line-height: 1;
+}
+
+.inv2-time-mer {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--blue);
+  margin-top: 2px;
+}
+
+/* ── Location ────────────────────────── */
+.inv2-loc {
+  margin-bottom: 22px;
+}
+
+.inv2-ic-pin {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 1.6;
+  margin-bottom: 6px;
+}
+
+.inv2-venue {
+  font-family: 'Ivy Presto', serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.inv2-city {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+/* ── Action buttons ──────────────────── */
+.inv2-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 26px;
+}
+
+.inv2-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.inv2-action:hover {
+  transform: translateY(-2px);
+}
+
+.inv2-action svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.inv2-action span {
+  font-family: 'Poppins', sans-serif;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.inv2-action-sep {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(58, 58, 58, 0.25);
+  margin: 4px 0;
+}
+
+/* ── RSVP ────────────────────────────── */
+.inv2-rsvp-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.inv2-rsvp-head i {
+  color: var(--blue);
+  opacity: 0.6;
+  font-size: 12px;
+  font-style: normal;
+}
+
+.inv2-rsvp-head span {
+  font-family: 'Ivy Presto', serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.inv2-phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.inv2-phone svg {
+  width: 13px;
+  height: 13px;
+  fill: var(--ink);
+}
+
+.inv2-rsvp-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+}
+
+/* ── Dress code ──────────────────────── */
+.inv2-dress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.inv2-dress svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.inv2-dress p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.8;
+}
+
+.inv2-dress span {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* ── Watermark crest ─────────────────── */
+.inv2-watermark {
+  display: block;
+  width: 150px;
+  height: auto;
+  margin: 26px auto 0;
+  opacity: 0.05;
+  color: var(--blue);
+}
+
+@media (max-width: 420px) {
+  .inv2-plate {
+    width: 170px;
+  }
+
+  .inv2-day {
+    font-size: 34px;
+  }
+}

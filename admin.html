@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — PIU Commencement 2026</title>
+  <meta name="description" content="Admin dashboard for managing PIU Commencement 2026 guest invitations.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=IM+Fell+English:ital@0;1&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+  <!-- ══ TOPBAR ══ -->
+  <header class="admin-topbar">
+    <div class="topbar-brand">
+      <svg viewBox="0 0 52 64" fill="none">
+        <rect x="23" y="0" width="6" height="52" fill="rgba(255,255,255,0.85)" />
+        <rect x="13" y="12" width="4" height="40" fill="rgba(255,255,255,0.55)" />
+        <rect x="35" y="12" width="4" height="40" fill="rgba(255,255,255,0.55)" />
+        <rect x="5" y="24" width="3" height="28" fill="rgba(255,255,255,0.35)" />
+        <rect x="44" y="24" width="3" height="28" fill="rgba(255,255,255,0.35)" />
+      </svg>
+      <div>
+        <div class="topbar-title">Guest Link Manager</div>
+        <div class="topbar-subtitle">PIU Commencement 2026 — Personalized Invitations</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <a class="btn-topbar" href="index.html" target="_blank">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+          <polyline points="15 3 21 3 21 9" />
+          <line x1="10" y1="14" x2="21" y2="3" />
+        </svg>
+        Preview Invitation
+      </a>
+    </div>
+  </header>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <main class="admin-main">
+
+    <!-- Stats Bar -->
+    <div class="stats-bar fade-in">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">Total Guests</div>
+      </div>
+      <div class="stat-card confirmed">
+        <div class="stat-value" id="statConfirmed">0</div>
+        <div class="stat-label">Confirmed</div>
+      </div>
+      <div class="stat-card pending">
+        <div class="stat-value" id="statPending">0</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card declined">
+        <div class="stat-value" id="statDeclined">0</div>
+        <div class="stat-label">Declined</div>
+      </div>
+    </div>
+
+    <!-- Add Guest Panel -->
+    <div class="panel fade-in">
+      <div class="panel-header">
+        <div class="panel-title">Add Guest</div>
+      </div>
+      <div class="panel-body">
+        <div class="add-guest-form">
+          <input type="text" class="form-input" id="nameInput" placeholder="Full name  (e.g. H.E. Dr. Chan Sothea)"
+            autocomplete="off" />
+          <input type="text" class="form-input" id="roleInput" placeholder="Position / Organization"
+            autocomplete="off" />
+          <input type="text" class="form-input" id="companyInput" placeholder="Company"
+            autocomplete="off" />
+          <button class="btn-primary" onclick="addGuest()">
+            <svg viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add Guest
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guest List Panel -->
+    <div class="panel fade-in">
+      <div class="panel-header">
+        <div class="panel-title">Guest List &amp; Links</div>
+      </div>
+      <div class="panel-body">
+
+        <div class="toolbar" style="margin-bottom: 20px;">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search guests…" autocomplete="off" />
+          </div>
+
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
+            <button class="filter-btn" data-filter="confirmed" onclick="setFilter('confirmed')">Confirmed</button>
+            <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">Pending</button>
+            <button class="filter-btn" data-filter="declined" onclick="setFilter('declined')">Declined</button>
+          </div>
+
+          <div class="toolbar-actions">
+            <button class="btn-icon" onclick="copyAllLinks()" title="Copy all visible links">
+              <svg viewBox="0 0 24 24">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              Copy All
+            </button>
+          </div>
+        </div>
+
+        <div id="tableWrap">
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <p class="empty-state-title">No guests yet — add a name above to get started.</p>
+            <p class="empty-state-desc">Each guest gets a unique personalized invitation link.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Import / Export Panel -->
+    <div class="panel fade-in">
+      <div class="panel-header">
+        <div class="panel-title">Import &amp; Export</div>
+        <div class="toolbar-actions">
+          <button class="btn-icon" onclick="exportCSV()">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Export CSV
+          </button>
+          <button class="btn-icon" onclick="exportJSON()">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            JSON Backup
+          </button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="import-area" id="importArea">
+          <input type="file" accept=".csv,.json" onchange="handleImport(event)" />
+          <svg viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          <p>Drop a CSV or JSON file here, or click to browse</p>
+          <span>Format: Name, Position, Company, Code, RSVP Status</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══ EDIT MODAL ══ -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Edit Guest</div>
+        <button class="btn-close-modal" onclick="closeEditModal()">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="editNameInput">Full Name</label>
+          <input type="text" class="form-input" id="editNameInput" placeholder="Full name" />
+        </div>
+        <div class="form-group">
+          <label for="editRoleInput">Position / Organization</label>
+          <input type="text" class="form-input" id="editRoleInput" placeholder="Position / Organization" />
+        </div>
+        <div class="form-group">
+          <label for="editCompanyInput">Company</label>
+          <input type="text" class="form-input" id="editCompanyInput" placeholder="Company" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONFIRM DIALOG ══ -->
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <p id="confirmTitle">Are you sure?</p>
+      <p class="confirm-subtext" id="confirmSubtext">This action cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="btn-secondary" onclick="confirmNo()">Cancel</button>
+        <button class="btn-danger" onclick="confirmYes()">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOAST CONTAINER ══ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/admin.js"></script>
+</body>
+
+</html>

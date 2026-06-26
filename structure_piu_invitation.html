@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIU Commencement Ceremony 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy: #1a3a8c;
+      --navy-dark: #122970;
+      --navy-deep: #0d1e5c;
+      --gold: #c9962a;
+      --gold-light: #e8b84b;
+      --gold-pale: #f5e6c0;
+      --cream: #f7f2e8;
+      --cream-dark: #ede5d0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #0d1a4a;
+      font-family: 'Cormorant Garamond', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* ══════════════════════════════════════
+   ENVELOPE SCENE — landing
+══════════════════════════════════════ */
+    .envelope-scene {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* background: radial-gradient(ellipse at 50% 38%, #1e3fa0 0%, #0a1540 72%); */
+      background-image: url("SVG/Asset_1.svg");
+      background-repeat: repeat;
+      background-size: 300px;
+      position: relative;
+      overflow: hidden;
+      padding: 40px 24px;
+    }
+
+    .envelope-scene::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /* background-image: repeating-linear-gradient(45deg,
+          rgba(201, 150, 42, 0.035) 0px, rgba(201, 150, 42, 0.035) 1px,
+          transparent 1px, transparent 28px); */
+      background-image: url("SVG/Asset_1.svg");
+      background-repeat: repeat;
+      background-size: 300px;
+      pointer-events: none;
+    }
+
+    .env-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    /* envelope illustration */
+    .envelope-art {
+      width: 220px;
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    .env-body {
+      width: 220px;
+      height: 148px;
+      background: #f7f2e8;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    /* envelope flap (closed) */
+    .env-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: var(--navy);
+      clip-path: polygon(0 0, 100% 0, 50% 68%);
+      z-index: 3;
+      transform-origin: top center;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .env-body.open .env-flap {
+      transform: rotateX(180deg);
+    }
+
+    /* envelope side triangles */
+    .env-left-tri {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 74px 0 74px 110px;
+      border-color: transparent transparent transparent var(--navy);
+      opacity: 0.18;
+    }
+
+    .env-right-tri {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 74px 110px 74px 0;
+      border-color: transparent var(--navy) transparent transparent;
+      opacity: 0.18;
+    }
+
+    .env-bottom-tri {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 74px;
+      background: var(--navy);
+      clip-path: polygon(0 100%, 100% 100%, 50% 0%);
+      opacity: 0.14;
+    }
+
+    /* wax seal on envelope */
+    .env-seal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #b8831a, #f0c040, #e4a818, #c47a10, #f0c040, #b8831a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .env-seal:hover {
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+
+    .env-seal svg {
+      width: 26px;
+      height: 32px;
+    }
+
+    /* letter peeking out */
+    .env-letter {
+      position: absolute;
+      bottom: 0;
+      left: 10px;
+      right: 10px;
+      height: 90px;
+      background: #fff;
+      border-radius: 2px 2px 0 0;
+      z-index: 2;
+      transform: translateY(90px);
+      transition: transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1) 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .env-body.open .env-letter {
+      transform: translateY(0);
+    }
+
+    .env-letter-preview {
+      text-align: center;
+      padding: 8px;
+    }
+
+    .env-letter-preview-title {
+      font-family: 'Cinzel', serif;
+      font-size: 7px;
+      letter-spacing: 1.5px;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .env-letter-preview-name {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--navy-deep);
+      line-height: 1.3;
+    }
+
+    /* university label above envelope */
+    .env-univ {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 12px;
+    }
+
+    /* guest name on landing */
+    .env-guest-name {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 6px;
+    }
+
+    .env-tap-hint {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.35);
+      animation: breathe 2.6s ease-in-out infinite;
+      margin-top: 10px;
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        opacity: .35
+      }
+
+      50% {
+        opacity: .8
+      }
+    }
+
+    /* ══════════════════════════════════════
+   COVER PAGE — after tap
+══════════════════════════════════════ */
+    .cover-page {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at 50% 30%, #1e3fa0 0%, #0a1540 75%);
+      position: relative;
+      overflow: hidden;
+      padding: 48px 24px 56px;
+      animation: fadeUp 0.65s ease both;
+    }
+
+    .cover-page.show {
+      display: flex;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* stripe panels */
+    .stripe-panel {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 70px;
+      background: repeating-linear-gradient(135deg,
+          rgba(255, 255, 255, 0.045) 0, rgba(255, 255, 255, 0.045) 1px,
+          transparent 1px, transparent 10px);
+    }
+
+    .sp-l {
+      left: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sp-l2 {
+      left: 22px;
+      width: 36px;
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      opacity: 0.55;
+    }
+
+    .sp-r {
+      right: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sp-r2 {
+      right: 22px;
+      width: 36px;
+      border-left: 1px solid rgba(255, 255, 255, 0.04);
+      opacity: 0.55;
+    }
+
+    .cover-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(45deg,
+          rgba(201, 150, 42, 0.035) 0px, rgba(201, 150, 42, 0.035) 1px,
+          transparent 1px, transparent 28px);
+      pointer-events: none;
+    }
+
+    .cover-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 460px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* PIU spire mark */
+    .spire {
+      margin-bottom: 22px;
+    }
+
+    .spire svg {
+      width: 52px;
+      height: 64px;
+    }
+
+    .cover-univ {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      color: rgba(255, 255, 255, 0.62);
+      margin-bottom: 18px;
+    }
+
+    .cover-h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.18;
+      letter-spacing: 0.3px;
+      margin-bottom: 18px;
+    }
+
+    .cover-class {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      color: var(--gold-light);
+      margin-bottom: 24px;
+    }
+
+    /* gold divider */
+    .gold-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .gr-line {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .gr-gem {
+      color: var(--gold);
+      font-size: 11px;
+    }
+
+    /* honor line */
+    .cover-honor {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 16px;
+    }
+
+    /* guest name on cover */
+    .cover-guest-name {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .cover-guest-pos {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      margin-bottom: 24px;
+    }
+
+    .cover-join {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+
+    /* curved flap at bottom */
+    .cover-flap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 88px;
+      background: var(--cream);
+      clip-path: ellipse(56% 100% at 50% 100%);
+      z-index: 3;
+    }
+
+    /* wax seal */
+    .wax-seal {
+      position: absolute;
+      bottom: 46px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #b8831a, #f0c040, #e4a818, #c47a10, #f0c040, #b8831a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.38);
+    }
+
+    .wax-seal svg {
+      width: 32px;
+      height: 40px;
+    }
+
+    /* open button */
+    .btn-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 38px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: background 0.22s, color 0.22s;
+      text-transform: uppercase;
+      margin-bottom: 100px;
+    }
+
+    .btn-open:hover {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .btn-open svg {
+      width: 13px;
+      height: 13px;
+      transition: transform 0.22s;
+    }
+
+    .btn-open:hover svg {
+      transform: translateY(2px);
+    }
+
+    /* ══════════════════════════════════════
+   INVITATION PAGES
+══════════════════════════════════════ */
+    .invitation-section {
+      display: none;
+      width: 100%;
+      background: radial-gradient(ellipse at 50% 0%, #1a3a8c 0%, #0a1540 55%);
+      padding: 48px 16px 64px;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeUp 0.65s ease both;
+    }
+
+    .invitation-section.show {
+      display: flex;
+    }
+
+    .card-wrap {
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 16px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ── Page 1: formal invitation ── */
+    .page-invite {
+      background: var(--cream);
+      padding: 48px 52px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .inv-side {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50px;
+      background: repeating-linear-gradient(135deg,
+          rgba(26, 58, 140, 0.05) 0, rgba(26, 58, 140, 0.05) 1px,
+          transparent 1px, transparent 10px);
+    }
+
+    .inv-side.l {
+      left: 0;
+      border-right: 1px solid rgba(26, 58, 140, 0.09);
+    }
+
+    .inv-side.r {
+      right: 0;
+      border-left: 1px solid rgba(26, 58, 140, 0.09);
+    }
+
+    .inv-body {
+      position: relative;
+      z-index: 2;
+    }
+
+    .inv-badge {
+      display: inline-block;
+      border: 1.5px solid var(--navy);
+      padding: 8px 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--navy);
+      margin-bottom: 28px;
+    }
+
+    .inv-preamble {
+      font-size: 14px;
+      font-style: italic;
+      color: #555;
+      line-height: 1.75;
+      margin-bottom: 4px;
+    }
+
+    .gold-orn {
+      color: var(--gold);
+      letter-spacing: 8px;
+      font-size: 13px;
+      margin: 18px 0;
+    }
+
+    .inv-name {
+      font-family: 'Cinzel', serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .inv-pos {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+
+    .inv-body-text {
+      font-size: 14.5px;
+      color: #444;
+      line-height: 1.9;
+      margin-bottom: 4px;
+    }
+
+    .inv-datetime {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin: 8px 0;
+    }
+
+    .inv-closing {
+      font-size: 14px;
+      font-style: italic;
+      color: #555;
+      line-height: 1.9;
+    }
+
+    .inv-rsvp {
+      font-size: 11.5px;
+      color: #888;
+      line-height: 2.1;
+      letter-spacing: 0.3px;
+      margin-top: 4px;
+    }
+
+    /* ── Page 2: program ── */
+    .page-prog-top {
+      background: var(--navy-deep);
+      padding: 38px 52px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prog-bg-year {
+      position: absolute;
+      font-family: 'Cinzel', serif;
+      font-size: 110px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.04);
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .prog-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .prog-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .prog-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.55);
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-prog-body {
+      background: var(--cream);
+      padding: 32px 52px 44px;
+      border-radius: 0 0 2px 2px;
+    }
+
+    .prog-list {
+      list-style: none;
+    }
+
+    .prog-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 0.5px solid rgba(26, 58, 140, 0.11);
+    }
+
+    .prog-item:last-child {
+      border-bottom: none;
+    }
+
+    .prog-time {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      white-space: nowrap;
+      min-width: 52px;
+      padding-top: 3px;
+    }
+
+    .prog-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+
+    .prog-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12.5px;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    .prog-footer {
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 0.5px solid rgba(26, 58, 140, 0.14);
+      text-align: center;
+    }
+
+    .prog-footer-name {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .prog-footer-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    /* ══════════════════════════════════════
+   ADMIN PANEL
+══════════════════════════════════════ */
+    .admin-panel {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      background: #f0ede8;
+      padding: 40px 16px 60px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .admin-panel.show {
+      display: flex;
+    }
+
+    .admin-card {
+      width: 100%;
+      max-width: 700px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .admin-head {
+      background: var(--navy);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .admin-head h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .admin-head p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .admin-body {
+      padding: 28px 32px;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      letter-spacing: 2.5px;
+      color: #aaa;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .input-row input {
+      flex: 1;
+      min-width: 160px;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      color: #222;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-row input:focus {
+      border-color: var(--navy);
+    }
+
+    .btn-add {
+      padding: 10px 22px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .btn-add:hover {
+      background: var(--navy-dark);
+    }
+
+    .guest-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+
+    .guest-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #aaa;
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .guest-table td {
+      padding: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13.5px;
+      color: #333;
+      border-bottom: 0.5px solid #f2f2f2;
+      vertical-align: middle;
+    }
+
+    .link-cell {
+      font-size: 11px;
+      color: var(--navy);
+      font-family: monospace;
+      word-break: break-all;
+      max-width: 200px;
+    }
+
+    .btn-copy {
+      padding: 5px 13px;
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      color: #555;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .btn-copy:hover {
+      background: var(--gold-pale);
+    }
+
+    .btn-copy.copied {
+      background: #e6f4ea;
+      color: #2d7a3a;
+      border-color: #b5d6bb;
+    }
+
+    .btn-preview {
+      padding: 5px 13px;
+      background: #f0f4ff;
+      border: 1px solid #c0ccee;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      color: var(--navy);
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-preview:hover {
+      background: #dce6ff;
+    }
+
+    .btn-remove {
+      padding: 5px 10px;
+      background: none;
+      border: 1px solid #f0c0c0;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      color: #c44;
+    }
+
+    .btn-remove:hover {
+      background: #fff0f0;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    .admin-tip {
+      margin-top: 24px;
+      padding: 14px 18px;
+      background: #fdf8ee;
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.8;
+    }
+
+    .toggle-admin-btn {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      background: rgba(10, 21, 64, 0.85);
+      color: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50px;
+      padding: 9px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      z-index: 200;
+      backdrop-filter: blur(8px);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .toggle-admin-btn:hover {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    @media (max-width: 500px) {
+      .page-invite {
+        padding: 36px 32px;
+      }
+
+      .cover-guest-name {
+        font-size: 20px;
+      }
+
+      .page-prog-top {
+        padding: 30px 32px 36px;
+      }
+
+      .page-prog-body {
+        padding: 24px 32px 36px;
+      }
+
+      .admin-body {
+        padding: 20px 18px;
+      }
+
+      .envelope-art {
+        width: 180px;
+      }
+
+      .env-body {
+        width: 180px;
+        height: 122px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ ENVELOPE SCENE ══ -->
+  <div class="envelope-scene" id="envelopeScene">
+    <div class="env-content">
+
+      <p class="env-univ">Paragon International University</p>
+
+      <!-- animated envelope -->
+      <div class="envelope-art">
+        <div class="env-body" id="envBody">
+          <div class="env-flap"></div>
+          <div class="env-left-tri"></div>
+          <div class="env-right-tri"></div>
+          <div class="env-bottom-tri"></div>
+
+          <!-- letter peeking out when opened -->
+          <div class="env-letter">
+            <div class="env-letter-preview">
+              <p class="env-letter-preview-title">Invitation</p>
+              <p class="env-letter-preview-name" id="envLetterName"></p>
+            </div>
+          </div>
+
+          <!-- wax seal -->
+          <div class="env-seal" id="envSeal" onclick="sealClick()" role="button" aria-label="Open invitation">
+            <svg viewBox="0 0 52 64" fill="none">
+              <rect x="22" y="0" width="8" height="44" fill="rgba(255,255,255,0.88)" />
+              <rect x="12" y="10" width="5" height="134" fill="rgba(255,255,255,0.6)" />
+              <rect x="35" y="10" width="5" height="134" fill="rgba(255,255,255,0.6)" />
+              <rect x="4" y="20" width="4" height="124" fill="rgba(255,255,255,0.38)" />
+              <rect x="44" y="20" width="4" height="124" fill="rgba(255,255,255,0.38)" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <p class="env-guest-name" id="envGuestLabel"></p>
+      <p class="env-tap-hint" id="tapHint">Tap the seal to open</p>
+
+    </div>
+  </div>
+
+  <!-- ══ COVER PAGE ══ -->
+  <div class="cover-page" id="coverPage">
+    <div class="stripe-panel sp-l"></div>
+    <div class="stripe-panel sp-l2"></div>
+    <div class="stripe-panel sp-r"></div>
+    <div class="stripe-panel sp-r2"></div>
+
+    <div class="cover-inner">
+      <div class="spire">
+        <svg viewBox="0 0 52 64" fill="none">
+          <rect x="23" y="0" width="6" height="52" fill="rgba(255,255,255,0.88)" />
+          <rect x="13" y="12" width="4" height="40" fill="rgba(255,255,255,0.6)" />
+          <rect x="35" y="12" width="4" height="40" fill="rgba(255,255,255,0.6)" />
+          <rect x="5" y="24" width="3" height="28" fill="rgba(255,255,255,0.38)" />
+          <rect x="44" y="24" width="3" height="28" fill="rgba(255,255,255,0.38)" />
+        </svg>
+      </div>
+
+      <p class="cover-univ">Paragon International University</p>
+      <h1 class="cover-h1">Commencement<br>Ceremony</h1>
+      <p class="cover-class">Class of 2026</p>
+
+      <div class="gold-rule">
+        <div class="gr-line"></div>
+        <span class="gr-gem">✦</span>
+        <div class="gr-line"></div>
+      </div>
+
+      <p class="cover-honor">has the honor to invite</p>
+
+      <h2 class="cover-guest-name" id="coverName">H.E. Dr. Hang Chuon Naron</h2>
+      <p class="cover-guest-pos" id="coverPos">Ministry of Education, Youth, and Sport</p>
+
+      <p class="cover-join">
+        to join the Commencement Ceremony<br>
+        for the Class of 2026
+      </p>
+
+      <button class="btn-open" onclick="openInvitation()">
+        Open Invitation
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M2 5l6 6 6-6" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- envelope flap shape at bottom -->
+    <div class="cover-flap"></div>
+    <div class="wax-seal">
+      <svg viewBox="0 0 52 64" fill="none">
+        <rect x="22" y="0" width="8" height="44" fill="rgba(255,255,255,0.88)" />
+        <rect x="12" y="10" width="5" height="34" fill="rgba(255,255,255,0.6)" />
+        <rect x="35" y="10" width="5" height="34" fill="rgba(255,255,255,0.6)" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══ INVITATION PAGES ══ -->
+  <div class="invitation-section" id="invSection">
+    <div class="card-wrap">
+
+      <!-- Page 1: Formal Invitation -->
+      <div class="page-invite">
+        <div class="inv-side l"></div>
+        <div class="inv-side r"></div>
+        <div class="inv-body">
+
+          <div class="inv-badge">Invitation</div>
+
+          <p class="inv-preamble">Paragon International University has the honor to invite</p>
+
+          <div class="gold-orn">✦ ✦ ✦</div>
+
+          <h2 class="inv-name" id="invName">H.E. Dr. Hang Chuon Naron</h2>
+          <p class="inv-pos" id="invPos">Ministry of Education, Youth, and Sport</p>
+
+          <div class="gold-orn">— ✦ —</div>
+
+          <p class="inv-body-text">
+            to the Commencement Ceremony for the<br>
+            Class of 2026 as our esteemed guest on
+          </p>
+          <p class="inv-datetime">Saturday, 15 August 2026 at 2:30 PM</p>
+          <p class="inv-body-text">at Sokha Hotel, Phnom Penh.</p>
+
+          <div class="gold-orn">— ✦ —</div>
+
+          <p class="inv-closing">
+            Our graduates have demonstrated exceptional<br>
+            dedication, and your presence would add<br>
+            immense value to this milestone celebration<br>
+            as we honor their hard work and bright futures.
+          </p>
+
+          <div class="gold-orn">— ✦ —</div>
+
+          <p class="inv-rsvp">
+            RSVP at 017 / 015 996 111 by Monday, 10 August 2026<br>
+            Dress Code : Formal
+          </p>
+
+        </div>
+      </div>
+
+      <!-- Page 2: Program -->
+      <div class="page-prog-top">
+        <span class="prog-bg-year">2026</span>
+        <p class="prog-eyebrow">Ceremony Program</p>
+        <h2 class="prog-heading">Saturday, 15 August 2026</h2>
+        <p class="prog-sub">Sokha Hotel, Phnom Penh &nbsp;·&nbsp; 2:30 PM</p>
+      </div>
+
+      <div class="page-prog-body">
+        <ul class="prog-list">
+          <li class="prog-item">
+            <span class="prog-time">2:00 PM</span>
+            <div>
+              <p class="prog-title">Guest Arrival &amp; Reception</p>
+              <p class="prog-desc">Guests welcomed and escorted to their seats. Light refreshments served in the foyer.
+              </p>
+            </div>
+          </li>
+          <li class="prog-item">
+            <span class="prog-time">2:30 PM</span>
+            <div>
+              <p class="prog-title">Processional &amp; Opening</p>
+              <p class="prog-desc">Academic procession of faculty and graduates. National anthem and opening remarks.
+              </p>
+            </div>
+          </li>
+          <li class="prog-item">
+            <span class="prog-time">2:50 PM</span>
+            <div>
+              <p class="prog-title">Distinguished Address</p>
+              <p class="prog-desc">Keynote address by distinguished guests and university leadership.</p>
+            </div>
+          </li>
+          <li class="prog-item">
+            <span class="prog-time">3:15 PM</span>
+            <div>
+              <p class="prog-title">Conferral of Degrees</p>
+              <p class="prog-desc">Presentation of diplomas to the graduating Class of 2026.</p>
+            </div>
+          </li>
+          <li class="prog-item">
+            <span class="prog-time">4:30 PM</span>
+            <div>
+              <p class="prog-title">Closing &amp; Reception</p>
+              <p class="prog-desc">Recessional, group photography, and celebratory reception.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="prog-footer">
+          <p class="prog-footer-name">Paragon International University</p>
+          <p class="prog-footer-tag">Honoring excellence · Celebrating futures</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ ADMIN PANEL ══ -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-card">
+      <div class="admin-head">
+        <svg width="38" height="46" viewBox="0 0 52 64" fill="none">
+          <rect x="23" y="0" width="6" height="52" fill="rgba(255,255,255,0.85)" />
+          <rect x="13" y="12" width="4" height="40" fill="rgba(255,255,255,0.55)" />
+          <rect x="35" y="12" width="4" height="40" fill="rgba(255,255,255,0.55)" />
+          <rect x="5" y="24" width="3" height="28" fill="rgba(255,255,255,0.35)" />
+          <rect x="44" y="24" width="3" height="28" fill="rgba(255,255,255,0.35)" />
+        </svg>
+        <div>
+          <h1>Guest Link Manager</h1>
+          <p>PIU Commencement 2026 — Personalized Invitations</p>
+        </div>
+      </div>
+
+      <div class="admin-body">
+        <p class="section-label">Add Guest</p>
+        <div class="input-row">
+          <input type="text" id="nameInput" placeholder="Full name  (e.g. H.E. Dr. Chan Sothea)" />
+          <input type="text" id="roleInput" placeholder="Position / Ministry" />
+          <button class="btn-add" onclick="addGuest()">+ Add</button>
+        </div>
+
+        <p class="section-label" style="margin-top:28px;">Guest List &amp; Links</p>
+        <div id="tableWrap">
+          <div class="empty-state">No guests yet — add a name above to generate a personalized link.</div>
+        </div>
+
+        <div class="admin-tip">
+          <strong>How it works:</strong> Each link encodes the guest's name and position in the URL.
+          When they open their link, they see a sealed envelope with their name, tap the gold wax seal to reveal the
+          cover page greeting them personally, then tap "Open Invitation" to read the full invitation.
+          No server needed — copy each link and send via email, WhatsApp, or Telegram.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="toggle-admin-btn" id="adminBtn" onclick="toggleAdmin()">Admin</button>
+
+  <script>
+    const BASE = window.location.href.split('?')[0];
+    let guests = [];
+    let adminOpen = false;
+
+    function param(k) {
+      return new URLSearchParams(window.location.search).get(k);
+    }
+
+    /* seal click: animate envelope open → show cover */
+    function sealClick() {
+      const envBody = document.getElementById('envBody');
+      const seal = document.getElementById('envSeal');
+      const hint = document.getElementById('tapHint');
+
+      hint.style.opacity = '0';
+      envBody.classList.add('open');
+      seal.style.transform = 'translate(-50%,-50%) scale(0.85)';
+      seal.style.opacity = '0.6';
+      seal.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        document.getElementById('envelopeScene').style.display = 'none';
+        document.getElementById('coverPage').classList.add('show');
+      }, 820);
+    }
+
+    /* open invitation from cover */
+    function openInvitation() {
+      document.getElementById('coverPage').classList.remove('show');
+      document.getElementById('coverPage').style.display = 'none';
+      document.getElementById('invSection').classList.add('show');
+    }
+
+    /* admin toggle */
+    function toggleAdmin() {
+      adminOpen = !adminOpen;
+      const panel = document.getElementById('adminPanel');
+      const btn = document.getElementById('adminBtn');
+      if (adminOpen) {
+        document.getElementById('envelopeScene').style.display = 'none';
+        document.getElementById('coverPage').style.display = 'none';
+        document.getElementById('coverPage').classList.remove('show');
+        document.getElementById('invSection').classList.remove('show');
+        panel.classList.add('show');
+        btn.textContent = '← Invitation';
+      } else {
+        panel.classList.remove('show');
+        document.getElementById('envelopeScene').style.display = 'flex';
+        btn.textContent = 'Admin';
+      }
+    }
+
+    function buildLink(name, role) {
+      const p = new URLSearchParams();
+      p.set('name', name);
+      if (role) p.set('role', role);
+      return BASE + '?' + p.toString();
+    }
+
+    function addGuest() {
+      const name = document.getElementById('nameInput').value.trim();
+      const role = document.getElementById('roleInput').value.trim();
+      if (!name) { document.getElementById('nameInput').focus(); return; }
+      guests.push({ name, role, id: Date.now() });
+      document.getElementById('nameInput').value = '';
+      document.getElementById('roleInput').value = '';
+      renderTable();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && adminOpen) addGuest();
+    });
+
+    function renderTable() {
+      const wrap = document.getElementById('tableWrap');
+      if (!guests.length) {
+        wrap.innerHTML = '<div class="empty-state">No guests yet — add a name above to generate a personalized link.</div>';
+        return;
+      }
+      let rows = guests.map(g => {
+        const link = buildLink(g.name, g.role);
+        const short = link.length > 52 ? link.slice(0, 52) + '…' : link;
+        const enc = encodeURIComponent(link);
+        return `<tr>
+        <td><strong>${esc(g.name)}</strong>${g.role ? `<br><span style="font-size:12px;color:#999;">${esc(g.role)}</span>` : ''}</td>
+        <td class="link-cell">${esc(short)}</td>
+        <td><button class="btn-copy" onclick="copyLink(this,'${enc}')">Copy</button></td>
+        <td><a class="btn-preview" href="${esc(link)}" target="_blank">Preview</a></td>
+        <td><button class="btn-remove" onclick="removeGuest(${g.id})">✕</button></td>
+      </tr>`;
+      }).join('');
+      wrap.innerHTML = `<table class="guest-table">
+      <thead><tr><th>Guest</th><th>Link</th><th></th><th></th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+    }
+
+    function removeGuest(id) {
+      guests = guests.filter(g => g.id !== id);
+      renderTable();
+    }
+
+    function copyLink(btn, enc) {
+      const link = decodeURIComponent(enc);
+      navigator.clipboard.writeText(link).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2200);
+      }).catch(() => prompt('Copy this link:', link));
+    }
+
+    function esc(s) {
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    /* ── on load: inject guest name from URL ── */
+    window.addEventListener('DOMContentLoaded', () => {
+      const name = param('name');
+      const role = param('role');
+
+      if (name) {
+        // envelope scene label
+        document.getElementById('envGuestLabel').textContent = name;
+        document.getElementById('envLetterName').textContent = name;
+        // cover page
+        document.getElementById('coverName').textContent = name;
+        document.getElementById('invName').textContent = name;
+        if (role) {
+          document.getElementById('coverPos').textContent = role;
+          document.getElementById('invPos').textContent = role;
+        } else {
+          document.getElementById('coverPos').style.display = 'none';
+          document.getElementById('invPos').style.display = 'none';
+        }
+      } else {
+        // no guest param — show default names for demo
+        document.getElementById('envGuestLabel').textContent = 'H.E. Dr. Hang Chuon Naron';
+        document.getElementById('envLetterName').textContent = 'H.E. Dr. Hang Chuon Naron';
+      }
+    });
+  </script>
+</body>
+
+</html>
