@@ -1,4 +1,7 @@
 {
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": ".",
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/:code(\\d{6})", "destination": "/index.html" }
