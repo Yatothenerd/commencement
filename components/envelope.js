@@ -25,7 +25,7 @@ const envelopeHTML = `
 
           <div class="env-letter">
             <div class="env-letter-preview">
-              <p class="env-letter-preview-title">to our esteem guest</p>
+              <p class="env-letter-preview-title">to our esteemed guest</p>
               <p class="env-letter-preview-name" id="envLetterName"></p>
             </div>
           </div>
