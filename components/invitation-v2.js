@@ -33,7 +33,7 @@ const invitationHTML = `
       <!-- Invitation plate (original) -->
       <img src="4x/Invitation_plate@4x.png" alt="Invitation" class="inv2-plate" />
 
-      <p class="inv-preamble">Paragon International University <br> has thehonor to invite</p>
+      <p class="inv-preamble">Paragon International University <br> has the honor to invite</p>
 
       <div class="blue-orn">&#8212;&nbsp;&#10022;&nbsp;&#8212;</div>
 
