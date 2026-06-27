@@ -4,7 +4,7 @@ const envelopeHTML = `
 
     <!-- Khmer textile strip (left) -->
     <div class="khmer-strip-left">
-      <div class="khmer-strip-inner"></div>
+      <div class="khmer-strip-inner-left"></div>
       <div class="khmer-strip-lines-left"><span></span></div>
     </div>
 
@@ -44,7 +44,7 @@ const envelopeHTML = `
 
     <!-- Khmer textile strip (right) -->
     <div class="khmer-strip-right">
-      <div class="khmer-strip-inner"></div>
+      <div class="khmer-strip-inner-right"></div>
       <div class="khmer-strip-lines-right"><span></span></div>
     </div>
 

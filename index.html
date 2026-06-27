@@ -52,6 +52,16 @@
     </div>
   </div>
 
+  <!-- Audio: drop your files into the audio/ folder -->
+  <audio id="bgMusic" src="audio/music.mp3" loop preload="auto"></audio>
+  <audio id="sealSound" src="audio/seal.mp3" preload="auto"></audio>
+
+  <!-- Floating music play/pause button -->
+  <button id="musicToggle" class="music-btn" onclick="toggleMusic()" aria-label="Play or pause music" hidden>
+    <svg class="ic-play" viewBox="0 0 24 24"><polygon points="7 4 20 12 7 20 7 4" /></svg>
+    <svg class="ic-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" /><rect x="14" y="5" width="4" height="14" /></svg>
+  </button>
+
   <script src="components/envelope.js"></script>
   <script src="components/invitation-v2.js"></script>
   <script src="components/program.js"></script>

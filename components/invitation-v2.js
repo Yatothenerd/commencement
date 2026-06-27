@@ -33,7 +33,7 @@ const invitationHTML = `
       <!-- Invitation plate (original) -->
       <img src="4x/Invitation_plate@4x.png" alt="Invitation" class="inv2-plate" />
 
-      <p class="inv-preamble">Paragon International University has the<br>honor to invite</p>
+      <p class="inv-preamble">Paragon International University <br> has thehonor to invite</p>
 
       <div class="blue-orn">&#8212;&nbsp;&#10022;&nbsp;&#8212;</div>
 
@@ -43,10 +43,11 @@ const invitationHTML = `
 
       <div class="blue-orn">&#8212;&nbsp;&#10022;&nbsp;&#8212;</div>
 
-      <p class="inv-body-text">to the Commencement Ceremony for the<br>Class of 2026 as our esteemed guest on</p>
+      <p class="inv-body-text">  to the <span class="highlight-class">Commencement Ceremony</span> for the <span class="highlight-class">Class of 2026</span><br>
+  as our esteemed guest on</p>
 
       <!-- Date block -->
-      <div class="inv2-datebox">
+      <div class="inv2-datebox">  
         <span class="inv2-corner tl"></span>
         <span class="inv2-corner tr"></span>
         <span class="inv2-corner bl"></span>
@@ -57,7 +58,7 @@ const invitationHTML = `
           <span class="inv2-month">August 2026</span>
         </div>
         <div class="inv2-date-sep"><i></i><span>&#9670;</span><i></i></div>
-        <div class="inv2-time"><span class="inv2-time-num">2:30</span><span class="inv2-time-mer">PM</span></div>
+        <div class="inv2-time"><span class="inv2-time-num">1:30</span><span class="inv2-time-mer">PM</span></div>
       </div>
 
       <!-- Location -->
@@ -81,10 +82,10 @@ const invitationHTML = `
       </div>
 
       <!-- RSVP -->
-      <div class="inv2-rsvp-head"><span>Kindly RSVP</span></div>
+      <div class="inv2-rsvp-head"><span>Kindly RSVP at </span></div>
       <p class="inv2-phone">
         <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        017 / 015 996 111
+        017 996 111 / 015 996 111
       </p>
       <p class="inv2-rsvp-sub">by Monday, 10 August 2026</p>
 

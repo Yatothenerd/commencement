@@ -109,6 +109,10 @@
   margin: 0 auto 14px;
 }
 
+.highlight-class {
+  font-weight: 600 !important;
+}
+
 .inv2-plate {
   width: 200px;
   margin-bottom: 14px;

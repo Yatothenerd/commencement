@@ -36,6 +36,63 @@ if (document.fonts && document.fonts.ready) {
 
 
 
+/* ══════════════════════════════════════
+   TWINKLING STARS
+══════════════════════════════════════ */
+function makeStars(container, count, onTop) {
+  if (!container) return;
+  if (container.querySelector(':scope > .starfield')) return; // avoid duplicates
+  const field = document.createElement('div');
+  field.className = 'starfield' + (onTop ? ' over' : '');
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('span');
+    s.className = 'star';
+    const size = Math.random() * 2 + 1;            // 1–3px
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.animationDuration = (1.6 + Math.random() * 2.6) + 's';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    field.appendChild(s);
+  }
+  container.prepend(field);
+}
+
+/* ══════════════════════════════════════
+   AUDIO — background music + seal sound
+══════════════════════════════════════ */
+function playSealSound() {
+  const s = document.getElementById('sealSound');
+  if (!s) return;
+  try { s.currentTime = 0; s.volume = 0.9; s.play().catch(() => {}); } catch {}
+}
+
+function updateMusicBtn(playing) {
+  const b = document.getElementById('musicToggle');
+  if (b) b.classList.toggle('playing', !!playing);
+}
+
+function startMusic() {
+  const m = document.getElementById('bgMusic');
+  const b = document.getElementById('musicToggle');
+  if (b) b.hidden = false;          // reveal the floating control
+  if (!m) return;
+  m.volume = 0.45;
+  m.play().then(() => updateMusicBtn(true)).catch(() => updateMusicBtn(false));
+}
+
+function toggleMusic() {
+  const m = document.getElementById('bgMusic');
+  if (!m) return;
+  if (m.paused) {
+    m.play().then(() => updateMusicBtn(true)).catch(() => {});
+  } else {
+    m.pause();
+    updateMusicBtn(false);
+  }
+}
+
 /**
  * Full-screen smoke transition: billows up to cover the screen, runs
  * `onCovered` (swap envelope -> invitation) while it's hidden, then clears.
@@ -72,12 +129,6 @@ function playSmokeTransition(onCovered) {
 /**
  * Seal click: open the envelope, then smoke-transition into the invitation.
  */
-function playMusic() {
-  if (bgMusic.paused) {
-    bgMusic.play();
-    bgMusic.loop = true; // optional: keep looping
-  }
-}
 function sealClick() {
   const envSeal = document.getElementById('envSeal');
   const envFlap = document.querySelector('.env-flap');
@@ -85,13 +136,13 @@ function sealClick() {
   const hint = document.getElementById('tapHint');
   const scene = document.getElementById('envelopeScene');
   const invSection = document.getElementById('invSection');
-  const bgMusic = document.getElementById("bgMusic");
-
-
 
   // Prevent double clicks
   if (envSeal.style.pointerEvents === 'none') return;
   envSeal.style.pointerEvents = 'none';
+
+  // Seal click sound (fires on the user gesture, so it's allowed to play).
+  playSealSound();
 
   gsap.timeline()
     .to(hint, { opacity: 0, duration: 0.3 })
@@ -99,14 +150,13 @@ function sealClick() {
     .to(envFlap, { rotateX: 180, duration: 0.6, ease: "power2.inOut" }, "-=0.2")
     .to(envLetter, { y: 0, duration: 0.8, ease: "back.out(1.2)" }, "-=0.2")
     .add(() => {
-      // Smoke covers the screen, we swap to the invitation behind it,
-      // then it dissipates to reveal the card.
-
+      // Music starts as the smoke rises; then swap + reveal the card.
+      startMusic();
       playSmokeTransition(() => {
         scene.style.display = 'none';
         invSection.style.display = 'flex';
         window.scrollTo({ top: 0, behavior: 'auto' });
-        // Scale the card to fit the screen (re-run as fonts/images settle).
+        // Re-fit as fonts/images settle.
         requestAnimationFrame(() => { fitInvitation(); requestAnimationFrame(fitInvitation); });
         setTimeout(fitInvitation, 300);
         setTimeout(fitInvitation, 800);
@@ -117,8 +167,6 @@ function sealClick() {
           { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: "power2.out", delay: 0.25 });
       });
     }, "+=0.3");
-  playMusic();
-
 }
 
 /* ── On load: inject guest name/position from URL params ── */
@@ -133,6 +181,10 @@ function loadComponents() {
     if (progContainer && typeof programHTML !== 'undefined') progContainer.innerHTML = programHTML;
 
     initInvitation();
+
+    // Twinkling stars over the envelope and the invitation's blue area.
+    makeStars(document.getElementById('envelopeScene'), 70);
+    makeStars(document.getElementById('invSection'), 70, true); // over the card too
   } catch (error) {
     console.error("Error loading components:", error);
     document.body.innerHTML = `

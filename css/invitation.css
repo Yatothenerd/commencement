@@ -141,10 +141,21 @@ body {
 /* background-position: 0 0, 10px 10px; */
 /* background-position: center; */
 /* centers the pattern } */
-.khmer-strip-inner {
+.khmer-strip-inner-left {
   position: absolute;
   inset: 0;
   background-image: url("../SVG/Asset_1.svg");
+  background-repeat: repeat, repeat;
+  background-size: 30px 30px, 30px, 30px;
+  background-position: 0 0, 20px 20px;
+  /* second layer shifted */
+  opacity: 0.9;
+}
+
+.khmer-strip-inner-right {
+  position: absolute;
+  inset: 0;
+  background-image: url("../SVG/Asset_11.svg");
   background-repeat: repeat, repeat;
   background-size: 30px 30px, 30px, 30px;
   background-position: 0 0, 20px 20px;
@@ -191,6 +202,89 @@ body {
   background: rgba(255, 255, 255, 0.12);
 }
 
+/* Twinkling starfield */
+.starfield {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: #2fbdff;
+  /* light blue */
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px rgba(120, 150, 230, 0.5);
+  /* soft light-blue glow */
+  animation: twinkle 2.6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.04;
+    transform: scale(0.6);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: scale(1.15);
+  }
+}
+
+/* starfield that sits on top (over the card) */
+.starfield.over {
+  z-index: 2;
+}
+
+/* Floating music play/pause button */
+.music-btn {
+  position: fixed;
+  bottom: 18px;
+  /* stay inside the portrait (≤460px wide, centred) on large screens */
+  right: max(18px, calc(50vw - 212px));
+  z-index: 5000;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(13, 22, 80, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.music-btn:hover {
+  transform: scale(1.08);
+  background: rgba(26, 47, 140, 0.75);
+}
+
+.music-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: #fff;
+}
+
+.music-btn .ic-pause {
+  display: none;
+}
+
+.music-btn.playing .ic-play {
+  display: none;
+}
+
+.music-btn.playing .ic-pause {
+  display: inline;
+}
+
 /* Full-screen smoke transition between envelope and invitation */
 .smoke-overlay {
   position: fixed;
@@ -199,6 +293,7 @@ body {
   pointer-events: none;
   overflow: hidden;
 }
+
 .smoke-cloud {
   position: absolute;
   width: 70vmax;
@@ -249,6 +344,8 @@ body {
   text-align: center;
   max-width: 520px;
   width: 100%;
+  /* keep all text inside the left/right khmer strips (strips are 30px wide) */
+  padding-inline: 18px;
 }
 
 /* envelope illustration */
@@ -519,13 +616,15 @@ body {
 
 .cover-h1 {
   font-family: 'Ivy Presto', normal;
-  font-size: 24px;
+  /* shrink to fit so it always stays on a single line within the frame */
+  font-size: clamp(13px, 4.2vw, 19px);
   font-weight: 400;
   color: var(--white);
   line-height: 1.15;
-  letter-spacing: 5px;
+  letter-spacing: 2.5px;
   margin-bottom: 5px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .cover-class {
@@ -673,8 +772,10 @@ body {
 .invitation-section {
   display: none;
   width: 100%;
-  min-height: 100dvh;          /* at least one screen, grows if taller */
-  overflow-y: auto;            /* scroll when the card is taller than the screen */
+  min-height: 100dvh;
+  /* at least one screen, grows if taller */
+  overflow-y: auto;
+  /* scroll when the card is taller than the screen */
   /* royal-blue gradient root — fills the whole screen */
   background: radial-gradient(ellipse at 100% 0%, var(--blue-mid) 0%, var(--blue-deep) 55%) no-repeat;
   background-attachment: fixed;
@@ -682,7 +783,8 @@ body {
   padding: 12px;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* start at top so nothing is cropped */
+  justify-content: flex-start;
+  /* start at top so nothing is cropped */
   /* animation: fadeUp 0.65s ease both; removed for GSAP */
 }
 
@@ -691,10 +793,15 @@ body {
 }
 
 .card-wrap {
+  position: relative;
+  z-index: 1;
+  /* sit above the starfield */
   width: 100%;
   max-width: 460px;
-  min-height: calc(100dvh - 24px); /* fill the screen when content is short */
-  height: auto;                    /* grow to content (no cropping) */
+  min-height: calc(100dvh - 24px);
+  /* fill the screen when content is short */
+  height: auto;
+  /* grow to content (no cropping) */
   border-radius: 10px;
   display: flex;
   flex-direction: column;
