@@ -389,12 +389,11 @@
 }
 
 .inv2-dress svg {
-  width: 26px;
-  height: 26px;
-  fill: none;
-  stroke: var(--blue);
-  stroke-width: 1.4;
-  stroke-linejoin: round;
+  width: 24px;
+  height: 24px;
+  fill: var(--blue);
+  /* filled tie icon */
+  stroke: none;
 }
 
 .inv2-dress p {
