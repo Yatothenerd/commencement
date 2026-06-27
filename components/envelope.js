@@ -29,7 +29,7 @@ const envelopeHTML = `
               <p class="env-letter-preview-name" id="envLetterName"></p>
             </div>
           </div>
-
+          <audio id="bgMusic" src="../music/bg_music.mp3"></audio>
           <!-- Wax seal -->
           <div class="env-seal" id="envSeal" onclick="sealClick()" role="button" tabindex="0"
             aria-label="Open invitation">

@@ -33,6 +33,9 @@ if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(fitInvitation);
 }
 
+
+
+
 /**
  * Full-screen smoke transition: billows up to cover the screen, runs
  * `onCovered` (swap envelope -> invitation) while it's hidden, then clears.
@@ -47,7 +50,7 @@ function playSmokeTransition(onCovered) {
     const c = document.createElement('div');
     c.className = 'smoke-cloud';
     c.style.left = (Math.random() * 120 - 30) + 'vw';
-    c.style.top  = (Math.random() * 120 - 30) + 'vh';
+    c.style.top = (Math.random() * 120 - 30) + 'vh';
     overlay.appendChild(c);
     clouds.push(c);
   }
@@ -69,6 +72,12 @@ function playSmokeTransition(onCovered) {
 /**
  * Seal click: open the envelope, then smoke-transition into the invitation.
  */
+function playMusic() {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    bgMusic.loop = true; // optional: keep looping
+  }
+}
 function sealClick() {
   const envSeal = document.getElementById('envSeal');
   const envFlap = document.querySelector('.env-flap');
@@ -76,6 +85,9 @@ function sealClick() {
   const hint = document.getElementById('tapHint');
   const scene = document.getElementById('envelopeScene');
   const invSection = document.getElementById('invSection');
+  const bgMusic = document.getElementById("bgMusic");
+
+
 
   // Prevent double clicks
   if (envSeal.style.pointerEvents === 'none') return;
@@ -89,6 +101,7 @@ function sealClick() {
     .add(() => {
       // Smoke covers the screen, we swap to the invitation behind it,
       // then it dissipates to reveal the card.
+
       playSmokeTransition(() => {
         scene.style.display = 'none';
         invSection.style.display = 'flex';
@@ -104,6 +117,8 @@ function sealClick() {
           { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: "power2.out", delay: 0.25 });
       });
     }, "+=0.3");
+  playMusic();
+
 }
 
 /* ── On load: inject guest name/position from URL params ── */
@@ -171,8 +186,8 @@ function initInvitation() {
 
   // 1) Show whatever the URL carries immediately (no flash / works offline).
   applyGuest({
-    name:    param('name'),
-    role:    param('role'),
+    name: param('name'),
+    role: param('role'),
     company: param('company')
   });
 
@@ -184,12 +199,12 @@ function initInvitation() {
   }
 
   // Initial Entrance Animation
-  gsap.fromTo("#envelopeScene", 
-    { opacity: 0 }, 
+  gsap.fromTo("#envelopeScene",
+    { opacity: 0 },
     { opacity: 1, duration: 1, ease: "power2.inOut" }
   );
-  gsap.fromTo(".env-content", 
-    { y: 30, opacity: 0 }, 
+  gsap.fromTo(".env-content",
+    { y: 30, opacity: 0 },
     { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.3 }
   );
 }
