@@ -43,7 +43,7 @@ const invitationHTML = `
 
       <div class="blue-orn">&#8212;&nbsp;&#10022;&nbsp;&#8212;</div>
 
-      <p class="inv-body-text">  to the <span class="highlight-class">Commencement Ceremony</span> for the <span class="highlight-class">Class of 2026</span><br>
+      <p class="inv-body-text">  to the <span class="highlight-class">Commencement Ceremony</span> for the <br> <span class="highlight-class">Class of 2026</span><br>
   as our esteemed guest on</p>
 
       <!-- Date block -->
