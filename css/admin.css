@@ -66,6 +66,14 @@ body {
   border-radius: var(--radius-xs);
   padding: 4px;
 }
+/* White logo on transparent PNG — needs the navy chip behind it to be visible */
+.topbar-brand > img {
+  width: 30px; height: 38px;
+  object-fit: contain;
+  background: var(--navy);
+  border-radius: var(--radius-xs);
+  padding: 5px;
+}
 .topbar-title {
   font-size: 17px; font-weight: 600; color: var(--text-head);
   letter-spacing: 0.2px;
