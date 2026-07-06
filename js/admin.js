@@ -518,6 +518,17 @@ function renderTable() {
 }
 
 /* ══════════════════════════════════════
+   LOGOUT
+══════════════════════════════════════ */
+async function handleLogout() {
+  try {
+    await fetch('/api/auth/logout', { method: 'POST' });
+  } catch { /* ignore network errors — still send them to /login */ }
+  sessionStorage.removeItem(TOKEN_KEY);
+  window.location.href = '/login';
+}
+
+/* ══════════════════════════════════════
    UI HELPERS
 ══════════════════════════════════════ */
 function esc(s) {

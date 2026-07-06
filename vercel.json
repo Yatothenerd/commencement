@@ -3,7 +3,9 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "rewrites": [
+    { "source": "/login", "destination": "/login.html" },
     { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/api/auth/:action", "destination": "/api/auth" },
     { "source": "/:code(\\d{6})", "destination": "/index.html" }
   ]
 }
