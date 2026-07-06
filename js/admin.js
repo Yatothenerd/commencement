@@ -518,6 +518,28 @@ function renderTable() {
 }
 
 /* ══════════════════════════════════════
+   AUTH GUARD
+   On Vercel, /admin is served by a plain static rewrite (no
+   server-side check runs — see vercel.json). So this page must
+   verify the session itself, client-side, before rendering.
+══════════════════════════════════════ */
+async function guardAuth() {
+  try {
+    const res = await fetch('/api/auth/check');
+    const data = await res.json();
+    if (!data.authenticated) {
+      window.location.replace('/login');
+      return false;
+    }
+    return true;
+  } catch {
+    // If the check itself fails (network error), fail closed.
+    window.location.replace('/login');
+    return false;
+  }
+}
+
+/* ══════════════════════════════════════
    LOGOUT
 ══════════════════════════════════════ */
 async function handleLogout() {
@@ -621,7 +643,11 @@ document.addEventListener('keydown', (e) => {
 /* ══════════════════════════════════════
    INIT
 ══════════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+  const ok = await guardAuth();
+  if (!ok) return;   // guardAuth() already redirected to /login
+
+  document.body.classList.add('authed');   // reveal the page (see css/admin.css)
   loadGuests();
   setupDragDrop();
 

@@ -37,6 +37,13 @@
 
 html { scroll-behavior: smooth; }
 
+/* Hidden until js/admin.js confirms the session is valid (guardAuth()).
+   Prevents a flash of the dashboard before an unauthenticated visitor
+   is redirected to /login — this matters because Vercel serves /admin
+   as a plain static file with no server-side check (see vercel.json). */
+body { visibility: hidden; }
+body.authed { visibility: visible; }
+
 body {
   background: var(--bg);
   font-family: 'Poppins', system-ui, sans-serif;

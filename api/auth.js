@@ -9,6 +9,11 @@
    scripts/add-admin.js.
 
      SESSION_SECRET   (cookie signing secret, env var)
+
+   Sessions are STATELESS: the cookie itself carries the signed
+   { user, adminId, exp } payload. No server-side session store —
+   this is required on Vercel, where each request can hit a
+   different serverless instance with its own memory.
    ═══════════════════════════════════════════════════════════ */
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
@@ -22,10 +27,6 @@ function db() {
   if (!_sql) _sql = neon(process.env.DATABASE_URL);
   return _sql;
 }
-
-// ── Session store (in-memory for local dev) ──────────────
-// For Vercel (serverless) we use a signed cookie approach instead.
-const sessions = new Map();
 
 const COOKIE_NAME   = 'piu_session';
 const COOKIE_MAX_AGE = 8 * 60 * 60 * 1000; // 8 hours
@@ -57,9 +58,22 @@ function unsign(signedValue) {
   return value;
 }
 
+// ── Session payload encoding (no server-side store) ──────
+function encodeSession(payload) {
+  return Buffer.from(JSON.stringify(payload)).toString('base64url');
+}
+function decodeSession(encoded) {
+  try {
+    return JSON.parse(Buffer.from(encoded, 'base64url').toString('utf8'));
+  } catch {
+    return null;
+  }
+}
+
 // ── Cookie helpers ───────────────────────────────────────
-function setSessionCookie(res, token) {
-  const signed = `${token}.${sign(token)}`;
+function setSessionCookie(res, payload) {
+  const value = encodeSession(payload);
+  const signed = `${value}.${sign(value)}`;
   res.setHeader('Set-Cookie', [
     `${COOKIE_NAME}=${signed}; ` +
     `HttpOnly; Path=/; SameSite=Lax; Max-Age=${COOKIE_MAX_AGE / 1000}` +
@@ -87,15 +101,11 @@ function getCookieValue(req) {
 export function isAuthenticated(req) {
   const raw = getCookieValue(req);
   if (!raw) return false;
-  const token = unsign(raw);
-  if (!token) return false;
-  // Check the token exists in our in-memory store
-  const session = sessions.get(token);
-  if (!session) return false;
-  if (Date.now() > session.expiresAt) {
-    sessions.delete(token);
-    return false;
-  }
+  const value = unsign(raw);
+  if (!value) return false;
+  const session = decodeSession(value);
+  if (!session || !session.exp) return false;
+  if (Date.now() > session.exp) return false;
   return true;
 }
 
@@ -135,26 +145,18 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid username or password' });
       }
 
-      // Create session
-      const token = crypto.randomBytes(32).toString('hex');
-      sessions.set(token, {
+      // Create session — self-contained, signed cookie (no server memory)
+      setSessionCookie(res, {
         user: admin.username,
         adminId: admin.id,
-        createdAt: Date.now(),
-        expiresAt: Date.now() + COOKIE_MAX_AGE,
+        exp: Date.now() + COOKIE_MAX_AGE,
       });
 
-      setSessionCookie(res, token);
       return res.status(200).json({ success: true, user: admin.username });
     }
 
     // ── LOGOUT ─────────────────────────────────────────
     if (action === 'logout' && req.method === 'POST') {
-      const raw = getCookieValue(req);
-      if (raw) {
-        const token = unsign(raw);
-        if (token) sessions.delete(token);
-      }
       clearSessionCookie(res);
       return res.status(200).json({ success: true });
     }
