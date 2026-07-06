@@ -93,6 +93,25 @@ function toggleMusic() {
   }
 }
 
+/* ── Pause music when the tab/window isn't visible (switched tabs,
+   minimized, screen locked, backgrounded on mobile); resume it when
+   it comes back — but only if it was actually playing before, so we
+   never override a user's manual pause. ── */
+let musicWasPlayingBeforeHide = false;
+document.addEventListener('visibilitychange', () => {
+  const m = document.getElementById('bgMusic');
+  if (!m) return;
+  if (document.hidden) {
+    musicWasPlayingBeforeHide = !m.paused;
+    if (musicWasPlayingBeforeHide) {
+      m.pause();
+      updateMusicBtn(false);
+    }
+  } else if (musicWasPlayingBeforeHide) {
+    m.play().then(() => updateMusicBtn(true)).catch(() => updateMusicBtn(false));
+  }
+});
+
 /**
  * Full-screen smoke transition: billows up to cover the screen, runs
  * `onCovered` (swap envelope -> invitation) while it's hidden, then clears.
