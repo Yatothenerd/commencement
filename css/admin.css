@@ -301,11 +301,13 @@ body {
 .btn-action svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
 .btn-action.copy    { background: rgba(31,111,230,0.10); color: var(--blue); }
 .btn-action.preview { background: rgba(31,111,230,0.10); color: var(--blue); }
+.btn-action.share   { background: var(--success-bg);      color: var(--success); }
 .btn-action.edit    { background: rgba(245,144,31,0.14); color: var(--orange-dark); }
 .btn-action.delete  { background: var(--danger-bg);       color: var(--danger); }
 .btn-action:hover { filter: brightness(0.95); transform: translateY(-1px); }
 .btn-action.copy:hover    { background: var(--blue);   color: #fff; }
 .btn-action.preview:hover { background: var(--blue);   color: #fff; }
+.btn-action.share:hover   { background: var(--success); color: #fff; }
 .btn-action.edit:hover    { background: var(--orange); color: #fff; }
 .btn-action.delete:hover  { background: var(--danger); color: #fff; }
 .btn-action.copied { background: var(--success); color: #fff; }

@@ -259,6 +259,44 @@ function copyAllLinks() {
 }
 
 /* ══════════════════════════════════════
+   SHARE (native OS share sheet)
+   Hands the link to the device/browser's own share UI so the person
+   picks Telegram, Messenger, WhatsApp, Mail, AirDrop, etc. themselves —
+   whatever is installed. We deliberately share the URL by itself
+   (no extra caption glued to it): most chat apps only auto-unfurl a
+   link preview/thumbnail when the message is *just* the URL — once
+   other text shares the line with it, several clients (Messenger
+   included) skip the preview and show a plain text line instead.
+══════════════════════════════════════ */
+async function shareLink(id) {
+  const guest = guests.find(g => sameId(g.id, id));
+  if (!guest) return;
+
+  const link = buildLink(guest.name, guest.role, guest.company, guest.urlCode);
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ url: link });
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;   // user closed the share sheet
+      fallbackCopy(link);
+    }
+    return;
+  }
+
+  // Browser has no native share support (e.g. desktop Firefox) — copy instead.
+  fallbackCopy(link);
+}
+
+function fallbackCopy(link) {
+  navigator.clipboard.writeText(link).then(() => {
+    showToast('Sharing isn\'t supported here — link copied instead', 'info');
+  }).catch(() => {
+    prompt('Copy this invitation link:', link);
+  });
+}
+
+/* ══════════════════════════════════════
    SEARCH & FILTER
 ══════════════════════════════════════ */
 function setFilter(filter) {
@@ -493,6 +531,9 @@ function renderTable() {
           </button>
           <button class="btn-action preview" data-tooltip="Preview" onclick="previewLink('${g.id}')">
             <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </button>
+          <button class="btn-action share" data-tooltip="Share" onclick="shareLink('${g.id}')">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
           <button class="btn-action edit" data-tooltip="Edit" onclick="editGuest('${g.id}')">
             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
