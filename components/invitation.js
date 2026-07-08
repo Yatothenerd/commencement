@@ -38,7 +38,7 @@ const invitationHTML = `
           <p class="inv-body-text">at Sokha Hotel, Phnom Penh.</p>
 
           <p class="inv-rsvp" style="margin-bottom: 100px;">
-            RSVP at 017 / 015 996 111 by Monday, 10 August 2026<br>
+            RSVP at 017 / 015 996 111 by Friday, 07 August 2026<br>
             Dress Code : Formal
           </p>
         </div>
