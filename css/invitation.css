@@ -606,12 +606,14 @@ body {
 
 .cover-univ {
   font-family: 'Ivy Presto', normal;
-  font-size: 12px;
+  /* shrink to fit so it never wraps within the frame */
+  font-size: clamp(7px, 2.6vw, 12px);
   font-weight: 200;
-  letter-spacing: 4px;
+  letter-spacing: clamp(1.5px, 0.9vw, 4px);
   text-transform: uppercase;
   color: var(--white-70);
   margin-bottom: 5px;
+  white-space: nowrap;
 }
 
 .cover-h1 {
